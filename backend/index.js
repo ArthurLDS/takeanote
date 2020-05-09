@@ -1,14 +1,25 @@
-const express = require("express");
+const express = require('express');
+const cors = require('cors');
 
 const app = express();
 
-app.get("/users", (request, response) => {
-  const params = request.query;
+app.use(cors());
+app.use(express.json());
 
-  return response.json({
-    nome: params.name,
-    sobrenome: " Lima",
-  });
+var notes = ""
+
+app.get("/notes", (request, response) => {
+  const params = request.query;
+  return response.json(notes);
 });
 
-app.listen(3333);
+app.post("/notes", (request, response) => {
+  const body = request.body;
+
+
+  console.log(body);
+  notes = body.note;
+  return response.json(notes);
+});
+
+app.listen(4444);
