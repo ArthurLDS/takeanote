@@ -6,7 +6,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-var notes = ""
+var notes = "opa"
 
 app.get("/notes", (request, response) => {
   const params = request.query;
@@ -22,4 +22,4 @@ app.post("/notes", (request, response) => {
   return response.json(notes);
 });
 
-app.listen(4444);
+app.listen(4000);
