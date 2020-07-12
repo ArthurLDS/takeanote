@@ -1,16 +1,17 @@
 # Imagem de Origem
-FROM node:13-alpine
+FROM node:10.14.1 as build
 
 # Diretório de trabalho(é onde a aplicação ficará dentro do container).
 WORKDIR /app
 
-# Adicionando `/app/node_modules/.bin` para o $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+COPY . .
 
-# Instalando dependências da aplicação e armazenando em cache.
-COPY package.json /app/package.json
-RUN npm install --silent
-RUN npm install react-scripts@3.3.1 -g --silent
+RUN npm ci --silent
+RUN npm run build
 
-# start app
-CMD ["npm", "start"]
+# Starting NGNIX
+FROM nginx
+
+COPY ./nginx.conf /etc/nginx/nginx.conf
+
+COPY --from=build /app/build /usr/share/nginx/html

@@ -1,5 +1,5 @@
 # Imagem de Origem
-FROM node:13-alpine as build
+FROM node:10.14.1 as build
 
 # Diretório de trabalho(é onde a aplicação ficará dentro do container).
 WORKDIR /app
